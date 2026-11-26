@@ -2,17 +2,23 @@
 
 **Status:** Draft · **Decider:** <the one person who answers a blocking question> · **Links:** <ticket, incident, design file>
 
-<!-- The first three sections are for a person who skims. The last three are for the build, and are collapsed.
-     Groups of four: at most 4 rows in a table, 4 items in a list, 4 groups in a section. -->
+- OPEN (<owner>): <a question that is not decided, and the requirement that it blocks. Delete this line if there is none.>
 
 ## Why
 
-<!-- At most 80 words. What happens today, with a number. What is true after the change.
-     End with one sentence that gives the scope. -->
+<!-- Delete every comment in this file before you finish; a comment above this line gives a lint warning.
+     The first three sections are for a person who skims. The last three are for the build, and are collapsed.
+     Groups of four: at most 4 rows in a table, 4 items in a list, 4 groups in a section.
+     At most 100 words, in this sequence: what happens today; what is true after the change;
+     the one behaviour that must not change or must never happen; the scope.
+     Give a number only if the person or the repository gave it. Do not invent a name, a count or a link:
+     write OPEN (owner): question in its place.
+     Record each fact in <spec-name>.sources.md; the linter checks Why and the status line against it. -->
 
 ## Example
 
-<!-- One real input and its real output, at the entry point that a client uses. One line of introduction. -->
+<!-- One real input and its real output, at the entry point that a client uses.
+     One line of introduction that shows how a user reaches the change: the command, the option or the request. -->
 
 ```
 <request or call, and its response or result>

@@ -6,15 +6,16 @@ Every rule has an ID. The linter prints the ID with each finding. `scripts/spec_
 
 | ID | Rule |
 |---|---|
-| S1 | Line 1 is `# Spec: <title>`. The status line has `**Status:**`, `**Decider:**` and `**Links:**`. Status is one of: Draft, In review, Approved, Implemented, Superseded. |
+| S1 | Line 1 is `# Spec: <title>`. The status line has `**Status:**`, `**Decider:**` and `**Links:**`. A comment before Why gives a warning. Status is one of: Draft, In review, Approved, Implemented, Superseded. |
 | S2 | The sections are, in this sequence: Why, Example, Check, Requirements, Design, Cases. Design is optional. No other `##` sections. |
 | S3 | Requirements has a table `ID \| Requirement`. IDs are `R<number>` and unique. Each requirement is one sentence in an EARS pattern, with exactly one of MUST, SHOULD, MAY. |
 | S4 | Example has one worked example in a code block, with real values. |
 | S5 | Cases has one or more tables `Given \| When \| Then \| Covers`. Every requirement ID appears in Covers. A row that protects existing behaviour has "Unchanged" in Covers; a spec with no such row gets a warning. |
 | S6 | Check is a numbered list. Each step starts with a verb (Send, Open, Run) and gives the result to expect. |
-| S7 | An open item is written `OPEN (owner): question`. A spec with Status Approved or Implemented has no open item. |
+| S7 | An open item is written `OPEN (owner): question`, as a list item directly under the status line, and nowhere else (the Decider field may hold one). A spec with Status Approved or Implemented has no open item. |
 | S8 | With `--repo`, each file path in the spec exists. |
 | S9 | Requirements, Design and Cases each sit in one `<details>` block. Its `<summary>` starts with "Show" and says what opens ("Show the 8 requirements"). A number in the summary matches the content. Why, Example and Check are never collapsed. |
+| S10 | Each fact in the status line and in Why is in the sources file, `<spec-name>.sources.md`: each word of the Decider's name, each link, and each number, month, weekday and ticket ID. An OPEN item is exempt. A spec with no sources file gets a warning. |
 
 ## EARS patterns for S3
 
@@ -34,7 +35,7 @@ MUST NOT and SHOULD NOT are valid. A requirement that needs two modal words is t
 |---|---|
 | L1 | A sentence has at most 25 words; more than 20 gives a warning. A requirement sentence has at most 40, so that the trigger and the response stay together. A code span counts as one word. |
 | L2 | A paragraph has at most 4 sentences. A bullet has at most 3 sentences, after an optional bold label. |
-| L3 | Why has at most 80 words. |
+| L3 | Why has at most 100 words. |
 | L4 | The spec has at most 1200 words outside code blocks. |
 | L5 | At most 16 requirements. More than 12 gives a warning. Split a larger spec. |
 | L6 | A group has at most 4 items: 4 rows in a table, 4 items in a list, 4 `###` groups in a section. Split a longer one into groups under `###` sub-headings. |
@@ -55,6 +56,8 @@ These are the Simplified Technical English writing rules that change how a model
 
 The linter cannot check these. Review them before the status becomes Approved.
 
+- Invented facts: S10 checks the status line and Why against the sources file. Read the sources file yourself: each quote must be words that the person gave. Check also for a claim in words that S10 cannot see ("most owners", "a common complaint").
+- Invented decisions: a requirement or a Design line that the person did not give is a proposal. Accept or reject each one before the status becomes Approved.
 - Failure modes: a crash in the middle of the work, two requests at the same time, expiry, partial failure, missing permission, old data.
 - Contradictions: a Design line that says more than its requirement, or a case that disagrees with a requirement.
 - Duplicates: a fact that appears in two places. Keep one copy.
@@ -114,5 +117,5 @@ The content is what 13 published templates and guides have in common. All of the
 | Must not change | A case with "Unchanged" in Covers, so that a test protects it. |
 | Alternatives | A Design line that forbids the tempting approach and gives the reason. |
 | Security, privacy, rollout | A requirement when it is behaviour; a Design line when it is a constraint. |
-| Open questions | An inline `OPEN (owner): question`. None can remain when the status is Approved. |
+| Open questions | A list of `OPEN (owner): question` items under the status line. None can remain when the status is Approved. |
 | File map | A Design line, only for a fact that the agent cannot find in the code. |

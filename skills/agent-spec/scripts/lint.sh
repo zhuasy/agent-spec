@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Run both linters on a spec. Usage: lint.sh SPEC.md [--glossary FILE] [--repo PATH] [--strict]
+# Run both linters on a spec. Usage: lint.sh SPEC.md [--glossary FILE] [--sources FILE] [--repo PATH] [--strict]
 # spec_lint.py checks structure, lengths, requirement patterns and the glossary.
 # Vale checks prose style. Exit code 1 when a check fails, 2 when Vale is missing.
 set -u
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ $# -lt 1 ]; then
-  echo "usage: lint.sh SPEC.md [--glossary FILE] [--repo PATH] [--strict]" >&2
+  echo "usage: lint.sh SPEC.md [--glossary FILE] [--sources FILE] [--repo PATH] [--strict]" >&2
   exit 2
 fi
 spec="$1"

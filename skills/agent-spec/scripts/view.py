@@ -73,6 +73,8 @@ def parse(text):
             while i < len(lines) and re.match(r"(-|\d+\.)\s+", lines[i].strip()):
                 items.append(re.sub(r"^(-|\d+\.)\s+", "", lines[i].strip()))
                 i += 1
+            if cur is None:
+                meta.setdefault("_open", []).extend(items)
             add((kind, items))
             continue
         else:
@@ -235,7 +237,10 @@ def render(title, meta, sections, terms, source, lint):
     if findings:
         items = "".join(f"<li><code>{esc(f)}</code></li>" for f in findings)
         lint_panel = f'<details class="lint-panel"><summary><span>Show the {len(findings)} lint findings</span></summary><ul>{items}</ul></details>'
-    facts = "".join(f"<div><dt>{esc(k)}</dt><dd>{r.inline(v)}</dd></div>" for k, v in meta.items() if k != "Status")
+    facts = "".join(f"<div><dt>{esc(k)}</dt><dd>{r.inline(v)}</dd></div>" for k, v in meta.items() if k not in ("Status", "_open"))
+    if meta.get("_open"):
+        items = "".join(f"<li>{r.inline(v)}</li>" for v in meta["_open"])
+        lint_panel = f'<div class="open"><p>Not decided yet</p><ul>{items}</ul></div>' + lint_panel
     navs = "".join(f'<div class="layer"><p>{name}</p><ul>{"".join(items)}</ul></div>' for name, items in nav.items() if items)
     return PAGE.format(title=esc(title), status=esc(status), status_class=slug(status), facts=facts, nav=navs,
                        body="".join(body), lint_label=esc(lint_label), lint_class="ok" if not errors else "bad",
@@ -275,6 +280,7 @@ nav li a:hover{background:var(--panel);text-decoration:none}nav li a.here{backgr
 nav ul ul{margin:2px 0 6px 10px;border-left:1px solid var(--line)}nav ul ul a{color:var(--soft);font-size:13.5px;padding:3px 12px}
 main{padding:44px 56px 120px;max-width:820px;min-width:0}
 h1{font-size:34px;line-height:1.12;letter-spacing:-.025em;font-weight:680;margin:0 0 18px;text-wrap:balance}
+div.open{border-left:3px solid var(--accent);padding:10px 16px;margin:14px 0;background:var(--panel,transparent);border-radius:0 8px 8px 0;font-size:14.5px}div.open p{margin:0 0 6px;font-weight:600}div.open ul{margin:0;padding-left:18px}
 dl.meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin:0 0 8px;font-size:14px}dl.meta div{display:flex;gap:8px}
 dl.meta dt{color:var(--soft)}dl.meta dd{margin:0}
 section{padding-top:38px}h2{font-size:21px;letter-spacing:-.012em;font-weight:650;margin:0 0 12px}

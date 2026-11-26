@@ -51,6 +51,8 @@ The full example is
   SHOULD or MAY.
 - **Every requirement has a case.** Cases use real values, and a case marked "Unchanged" protects behaviour that
   works today.
+- **Nothing invented.** Each name, number, date and ticket in the status line and in Why must be in a sources
+  file that holds the person's own words. The linter fails the spec if one is not.
 - **Linted.** Structure, length, chunk size, glossary terms and prose style are checked by a script and Vale.
 
 ## The six sections
@@ -85,8 +87,8 @@ spec.md:99:21:AgentSpec.Vague:G1: 'quickly' is not specific. Give a value, a lis
 
 | Rules | Check |
 |---|---|
-| S1 to S9 | Title and status line, section order, requirement patterns, a worked example, case coverage, verb-first check steps, open items, file paths, a collapsed build layer |
-| L1 to L6 | 25 words a sentence (40 for a requirement, a warning above 20), 4 sentences a paragraph, 80 words in Why, 1,200 words in the spec, 16 requirements, and groups of four: 4 rows a table, 4 items a list, 4 groups a section |
+| S1 to S10 | Title and status line, section order, requirement patterns, a worked example, case coverage, verb-first check steps, open items, file paths, a collapsed build layer, facts that are in the sources file |
+| L1 to L6 | 25 words a sentence (40 for a requirement, a warning above 20), 4 sentences a paragraph, 100 words in Why, 1,200 words in the spec, 16 requirements, and groups of four: 4 rows a table, 4 items a list, 4 groups a section |
 | G1 to G5 | No vague words, glossary terms only, active voice, no "It is" or "There is" openers, no weak verbs |
 
 The full list is in [`rules.md`](skills/agent-spec/references/rules.md). The language rules are the Simplified
@@ -114,6 +116,19 @@ Works with Claude Code, Codex, Cursor and other agents that read skills. Needs `
 style rules (G1, G3, G4, G5) need [Vale](https://vale.sh/docs/install); without it the structure, length and glossary
 rules still run through `spec_lint.py`.
 
+## Updates
+
+The skill updates itself. Before each use the agent runs `scripts/self_update.sh`, which runs
+`npx skills update agent-spec` at most once a day and never blocks the task. Set `AGENT_SPEC_NO_UPDATE=1` to
+switch it off, or run `npx skills update agent-spec` yourself.
+
+## Evals
+
+`evals/` holds two eval sets. `evals/briefs` with `evals/grade.py` checks that a spec written from a brief
+passes the linter and invents nothing. `evals/quality` compares any way of writing a spec on six problems: hidden
+tests score what an agent builds from the spec, and quizzes score how clear the spec is and what a reader gets
+from its first 150 words. Each folder has a README with the steps.
+
 ## What is in the skill
 
 | File | Purpose |
@@ -122,9 +137,11 @@ rules still run through `spec_lint.py`.
 | [`assets/spec-template.md`](skills/agent-spec/assets/spec-template.md) | The blank template |
 | [`assets/glossary-template.md`](skills/agent-spec/assets/glossary-template.md) | A blank project glossary |
 | [`references/golden-example.md`](skills/agent-spec/references/golden-example.md) | A complete spec that passes the linter |
+| [`assets/sources-template.md`](skills/agent-spec/assets/sources-template.md) | A blank sources file |
 | [`references/rules.md`](skills/agent-spec/references/rules.md) | Every rule with its ID |
 | [`scripts/lint.sh`](skills/agent-spec/scripts/lint.sh) | Runs both linters |
 | [`scripts/view.py`](skills/agent-spec/scripts/view.py) | Renders a spec as one HTML page |
+| [`scripts/self_update.sh`](skills/agent-spec/scripts/self_update.sh) | Updates the skill, at most once a day |
 
 ## License
 

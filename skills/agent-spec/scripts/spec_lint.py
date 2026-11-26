@@ -4,7 +4,7 @@
 The rules are in references/rules.md. Vale checks the prose style rules;
 run scripts/lint.sh to run both. Standard library only.
 
-Usage: spec_lint.py SPEC.md [--glossary glossary.md] [--repo PATH] [--strict]
+Usage: spec_lint.py SPEC.md [--glossary glossary.md] [--sources FILE] [--repo PATH] [--strict]
 Exit code 1 when there are errors (or warnings, with --strict).
 """
 import argparse
@@ -41,7 +41,7 @@ GROUPS_MAX = 4
 BUILD = ["Requirements", "Design", "Cases"]
 NOT_A_VERB = {"The", "A", "An", "It", "This", "That", "These", "Those", "There", "In", "On", "At", "For",
               "With", "When", "If", "After", "Before", "Then", "Each", "Every", "All", "Both", "CODE"}
-WHY_MAX = 80
+WHY_MAX = 100
 REQ_ROWS_WARN, REQ_ROWS_MAX = 12, 16
 DOC_MAX = 1200
 
@@ -186,7 +186,63 @@ def check_prose(rep, line, text, banned, limit=SENTENCE_MAX):
             rep.add(line, "E", "G2", f"\"{word}\" is not a glossary term; use \"{term}\"")
 
 
-def lint(path, glossary, repo):
+MONTHS = ("january february march april june july august september october november december "
+          "monday tuesday wednesday thursday friday saturday sunday").split()
+NUMBER_WORDS = ("two three four five six seven eight nine ten eleven twelve dozen hundred thousand "
+                "million billion half twice").split()
+TICKET = re.compile(r"^[A-Z][A-Z0-9]+-\d+$")
+NUMBER = re.compile(r"^[$€£]?\d[\d,.:/-]*[A-Za-z%]{0,3}$")
+
+
+def facts(text):
+    """The parts of a sentence that state a fact about the world: numbers, dates, ticket IDs, links."""
+    text = re.sub(r"\bOPEN \([^)]+\):[^.?]*[.?]?", " ", text)
+    text = re.sub(r"`[^`]*`", " ", text)
+    found = []
+    for token in text.split():
+        token = token.strip("()[]\"'*,;!?").rstrip(".:")
+        if not token:
+            continue
+        low = token.lower()
+        if TICKET.match(token) or low.startswith(("http://", "https://")) or NUMBER.match(token):
+            found.append(token)
+        elif low in MONTHS or low in NUMBER_WORDS:
+            found.append(token)
+    return found
+
+
+def in_sources(fact, sources):
+    plain = fact.replace(",", "") if NUMBER.match(fact) else fact
+    return re.search(rf"(?<![\w.]){re.escape(plain.lower())}(?![\w])", sources) is not None
+
+
+def check_sources(rep, sources_path, head, why):
+    """S10: each fact in the status line and in Why is in the sources file."""
+    claims = []
+    for field in ("Decider", "Links"):
+        m = re.search(rf"\*\*{field}:\*\*\s*([^·]+)", head)
+        value = m.group(1).strip() if m else ""
+        if not value or OPEN.search(value) or value.lower() in ("none", "none."):
+            continue
+        if field == "Decider":
+            name = re.sub(r"\([^)]*\)", " ", value)
+            claims += [(3, w) for w in re.findall(r"[^\W\d_]{2,}", name)]
+        else:
+            claims += [(3, item.strip()) for item in value.split(",") if item.strip()]
+    for line, text in why:
+        claims += [(line, f) for f in facts(text)]
+    if not claims:
+        return
+    if not Path(sources_path).exists():
+        rep.add(3, "W", "S10", f"no sources file ({Path(sources_path).name}), so {len(claims)} facts in the status line and Why have no check")
+        return
+    sources = re.sub(r"(?<=\d),(?=\d)", "", Path(sources_path).read_text().lower())
+    for line, fact in claims:
+        if not in_sources(fact, sources):
+            rep.add(line, "E", "S10", f"\"{fact}\" is not in the sources file; use a value that the person or the repository gave, or write \"OPEN (owner): question\"")
+
+
+def lint(path, glossary, repo, sources=None):
     rep = Report(path)
     raw = Path(path).read_text()
     sections, order = parse(raw)
@@ -204,6 +260,12 @@ def lint(path, glossary, repo):
     for field in ("Decider", "Links"):
         if not re.search(rf"\*\*{field}:\*\*\s*\S", head):
             rep.add(3, "E", "S1", f"status line needs **{field}:**")
+    if "<!--" in raw.split("\n## ")[0]:
+        rep.add(3, "W", "S1", "a comment before Why uses the first words that a reader sees; delete it or move it to the end")
+
+    # S10 facts come from the sources file
+    why = [(line, d) for k, line, d in sections.get("Why", []) if k in ("para", "bullet")]
+    check_sources(rep, sources or str(Path(path).with_suffix("")) + ".sources.md", head, why)
 
     # S2 sections
     names = [n for n, _ in order]
@@ -222,7 +284,7 @@ def lint(path, glossary, repo):
     for name, blocks in sections.items():
         run = 0
         for kind, line, data in blocks:
-            run = run + 1 if kind == "bullet" else 0
+            run = run + 1 if kind == "bullet" and name != "_head" else 0
             if run == LIST_ITEMS_MAX + 1:
                 rep.add(line, "E", "L6", f"list has more than {LIST_ITEMS_MAX} items; group the items under labels or sub-headings")
             units = []
@@ -247,6 +309,8 @@ def lint(path, glossary, repo):
                 if OPEN.search(text):
                     if not OPEN_OK.search(text):
                         rep.add(uline, "E", "S7", "write an open item as \"OPEN (owner): question\"")
+                    if name != "_head":
+                        rep.add(uline, "E", "S7", "put each open item in a list directly under the status line, so that a reader sees first what is not decided")
                     if status in FINAL:
                         rep.add(uline, "E", "S7", f"a spec with Status {status} has no OPEN item")
     if total > DOC_MAX:
@@ -364,11 +428,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("spec")
     ap.add_argument("--glossary", help="default: glossary.md next to the spec")
+    ap.add_argument("--sources", help="default: <spec name>.sources.md next to the spec")
     ap.add_argument("--repo", help="check that each file path in the spec exists here")
     ap.add_argument("--strict", action="store_true", help="warnings also fail")
     args = ap.parse_args()
     glossary = args.glossary or str(Path(args.spec).parent / "glossary.md")
-    rep = lint(args.spec, glossary, args.repo)
+    rep = lint(args.spec, glossary, args.repo, args.sources)
     print(f"{rep.errors} errors, {rep.warnings} warnings")
     sys.exit(1 if rep.errors or (args.strict and rep.warnings) else 0)
 

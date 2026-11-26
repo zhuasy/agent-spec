@@ -2,8 +2,6 @@
 
 **Status:** Approved · **Decider:** Dana Okafor (projects team) · **Links:** PROJ-412, SUP-88
 
-<!-- Golden example. The product, people, paths and numbers are invented. -->
-
 ## Why
 
 The project list shows every project of an account and has no filter. Owners delete finished projects to shorten the list. Deleting a project also removes its tasks. Support restored 41 deleted projects from backups in October.
@@ -125,3 +123,5 @@ The setup for every case:
 | Ana archived `prj_301` | Ana sends `GET /v1/projects?include_archived=true` | The list has `prj_301` and `prj_302`. | R7 |
 
 </details>
+
+<!-- Golden example. The product, people, paths and numbers are invented. -->
