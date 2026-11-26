@@ -1,0 +1,29 @@
+extends: existence
+message: "G3: '%s' is passive voice. Name who acts."
+level: warning
+ignorecase: true
+raw:
+  - \b(?:am|are|were|being|is|been|was|be)\b\s+(?:\w+ly\s+)?
+tokens:
+  - '[\w]+ed'
+  - built
+  - chosen
+  - done
+  - found
+  - given
+  - held
+  - kept
+  - known
+  - left
+  - lost
+  - made
+  - put
+  - read
+  - run
+  - seen
+  - sent
+  - set
+  - shown
+  - taken
+  - thrown
+  - written

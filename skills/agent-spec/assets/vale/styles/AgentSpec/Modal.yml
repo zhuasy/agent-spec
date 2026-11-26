@@ -1,0 +1,7 @@
+extends: existence
+message: "G1: Lowercase '%s' is ambiguous. Use SHOULD or MAY in a requirement, or state the fact."
+level: error
+ignorecase: false
+tokens:
+  - should
+  - may

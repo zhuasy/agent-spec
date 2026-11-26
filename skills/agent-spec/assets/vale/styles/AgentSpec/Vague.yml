@@ -1,0 +1,21 @@
+extends: existence
+message: "G1: '%s' is not specific. Give a value, a list or a behaviour."
+level: error
+ignorecase: true
+tokens:
+  - etc
+  - and/or
+  - TBD
+  - appropriate
+  - appropriately
+  - properly
+  - gracefully
+  - robust
+  - scalable
+  - user-friendly
+  - simply
+  - easily
+  - quickly
+  - fast
+  - best practices?
+  - (?:as|if|when|where) (?:needed|necessary|required|applicable)
