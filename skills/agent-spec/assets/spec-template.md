@@ -2,7 +2,8 @@
 
 **Status:** Draft · **Decider:** <the one person who answers a blocking question> · **Links:** <ticket, incident, design file>
 
-<!-- The first three sections are for a person who skims. The last three are for the build. -->
+<!-- The first three sections are for a person who skims. The last three are for the build, and are collapsed.
+     Groups of four: at most 4 rows in a table, 4 items in a list, 4 groups in a section. -->
 
 ## Why
 
@@ -32,9 +33,16 @@
      If <condition>, then the <system> MUST <response>.
      The <system> MUST <response>. -->
 
+<details>
+<summary>Show the <number> requirements</summary>
+
+### <Group of at most 4 requirements>
+
 | ID | Requirement |
 |---|---|
 | R1 | When <trigger>, the <system> MUST <response>. |
+
+</details>
 
 ## Design
 
@@ -44,7 +52,14 @@
      One fact for each bullet, with a bold label that names the topic. Do not repeat a requirement.
      Delete the section if it is empty. -->
 
+<details>
+<summary>Show the <number> design decisions</summary>
+
+### <Group of at most 4 decisions>
+
 - **<Topic>.** <decision, and the reason if the agent cannot infer it>
+
+</details>
 
 ## Cases
 
@@ -52,9 +67,12 @@
      Add a row with "Unchanged" in Covers for each behaviour that works today and that the change must keep.
      Include the case that is easiest to get wrong: empty, duplicate, no permission,
      two at the same time, too large, old data.
-     At most 8 rows in one table. Group the cases under ### sub-headings. -->
+     At most 4 rows in one table and at most 4 groups. Group the cases under ### sub-headings. -->
 
-<setup that every case shares, as a short list>
+<details>
+<summary>Show the <number> cases</summary>
+
+<setup that every case shares, as a list of at most 4 items>
 
 ### <Group of cases>
 
@@ -62,3 +80,5 @@
 |---|---|---|---|
 | <state> | <action> | <result> | R1 |
 | <state> | <action that works today> | <the same result as today> | Unchanged |
+
+</details>

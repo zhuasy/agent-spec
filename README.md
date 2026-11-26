@@ -36,10 +36,15 @@ POST /v1/projects/prj_301/archive   →   200 {"id": "prj_301", "archived_at": "
 4. Send a `PATCH` request to the project. The response is 409.
 ```
 
-The rest is for the build: requirements, design decisions and test cases. The full example is
+The rest is for the build: requirements, design decisions and test cases, each collapsed behind a "Show…" line.
+The full example is
 [`golden-example.md`](skills/agent-spec/references/golden-example.md).
 
-- **Skim first, detail after.** Why, Example and Check fit on one screen. Requirements, Design and Cases follow.
+- **Skim first, detail on demand.** Why, Example and Check fit on one screen. Requirements, Design and Cases are
+  collapsed until the reader opens them.
+- **Groups of four.** A table has at most 4 rows, a list 4 items, a section 4 groups.
+- **A page to read.** `view.py` turns a spec into one HTML page with a sidebar, light and dark themes, glossary
+  hovers, and links from each case to its requirements.
 - **Only what sources agree on.** The sections are what 13 published design-doc templates and agent-spec guides
   have in common. Summary, non-goals, alternatives, rollout and open questions are not sections.
 - **Requirements an agent cannot misread.** One sentence each, in an EARS pattern, with exactly one of MUST,
@@ -57,7 +62,7 @@ The rest is for the build: requirements, design decisions and test cases. The fu
 | Skim | Check | Numbered steps, each one a verb and the result to expect |
 | Build | Requirements | A table of behaviours with IDs, one sentence each |
 | Build | Design | Optional. Only what the agent cannot find in the code or decide alone |
-| Build | Cases | Tables of `Given`, `When`, `Then`, in groups of at most 8 rows |
+| Build | Cases | Tables of `Given`, `When`, `Then`, in groups of at most 4 rows |
 
 ## The linter
 
@@ -72,20 +77,31 @@ Each finding names a rule:
 ```
 spec.md:20: E S3 R4 must be one sentence in an EARS pattern (see references/rules.md)
 spec.md:20: E G2 "server" is not a glossary term; use "API"
-spec.md:63: E L6 table has 15 rows, maximum is 8; split it under ### sub-headings
+spec.md:63: E L6 table has 8 rows, maximum is 4; split it into groups under ### sub-headings
+spec.md:43: E S9 start the summary with "Show" and say what opens, for example "Show the 8 requirements"
 spec.md:65: E S7 a spec with Status Approved has no OPEN item
 spec.md:99:21:AgentSpec.Vague:G1: 'quickly' is not specific. Give a value, a list or a behaviour.
 ```
 
 | Rules | Check |
 |---|---|
-| S1 to S8 | Title and status line, section order, requirement patterns, a worked example, case coverage, open items, file paths |
-| L1 to L6 | 25 words a sentence (40 for a requirement, a warning above 20), 4 sentences a paragraph, 80 words in Why, 1,200 words in the spec, 20 requirements, 8 rows a table and 8 items a list |
+| S1 to S9 | Title and status line, section order, requirement patterns, a worked example, case coverage, verb-first check steps, open items, file paths, a collapsed build layer |
+| L1 to L6 | 25 words a sentence (40 for a requirement, a warning above 20), 4 sentences a paragraph, 80 words in Why, 1,200 words in the spec, 16 requirements, and groups of four: 4 rows a table, 4 items a list, 4 groups a section |
 | G1 to G5 | No vague words, glossary terms only, active voice, no "It is" or "There is" openers, no weak verbs |
 
 The full list is in [`rules.md`](skills/agent-spec/references/rules.md). The language rules are the Simplified
 Technical English writing rules that change how a model reads a spec; a project glossary replaces the STE
 dictionary.
+
+## The viewer
+
+```sh
+python3 skills/agent-spec/scripts/view.py path/to/spec.md --open
+```
+
+Writes `spec.html` next to the spec: one self-contained file, no network requests. The skim layer is open, each
+build section opens from its "Show…" control, a pointer on a requirement lights the cases that cover it, and a
+glossary term shows its meaning on hover.
 
 ## Install
 
@@ -108,6 +124,7 @@ rules still run through `spec_lint.py`.
 | [`references/golden-example.md`](skills/agent-spec/references/golden-example.md) | A complete spec that passes the linter |
 | [`references/rules.md`](skills/agent-spec/references/rules.md) | Every rule with its ID |
 | [`scripts/lint.sh`](skills/agent-spec/scripts/lint.sh) | Runs both linters |
+| [`scripts/view.py`](skills/agent-spec/scripts/view.py) | Renders a spec as one HTML page |
 
 ## License
 

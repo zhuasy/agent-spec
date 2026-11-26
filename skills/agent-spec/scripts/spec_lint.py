@@ -35,12 +35,14 @@ SENTENCE_MAX = 25
 REQUIREMENT_MAX = 40
 PARAGRAPH_MAX = 4
 BULLET_MAX = 3
-TABLE_ROWS_MAX = 8
-LIST_ITEMS_MAX = 8
+TABLE_ROWS_MAX = 4
+LIST_ITEMS_MAX = 4
+GROUPS_MAX = 4
+BUILD = ["Requirements", "Design", "Cases"]
 NOT_A_VERB = {"The", "A", "An", "It", "This", "That", "These", "Those", "There", "In", "On", "At", "For",
               "With", "When", "If", "After", "Before", "Then", "Each", "Every", "All", "Both", "CODE"}
 WHY_MAX = 80
-REQ_ROWS_WARN, REQ_ROWS_MAX = 15, 20
+REQ_ROWS_WARN, REQ_ROWS_MAX = 12, 16
 DOC_MAX = 1200
 
 
@@ -89,7 +91,7 @@ def split_row(line):
 def parse(text):
     """Return ({section: [(kind, line, data)]}, [(section, line)]).
 
-    Kinds: para, bullet, table, code, heading.
+    Kinds: para, bullet, table, code, heading, details, summary.
     """
     text = re.sub(r"<!--.*?-->", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
     sections, order = {"_head": []}, []
@@ -110,6 +112,12 @@ def parse(text):
             in_code = not in_code
         elif in_code:
             continue
+        elif line in ("<details>", "</details>"):
+            flush()
+            sections[current].append(("details", number, line))
+        elif re.fullmatch(r"<summary>.*</summary>", line):
+            flush()
+            sections[current].append(("summary", number, line[9:-10].strip()))
         elif line.startswith("## "):
             flush()
             current = line[3:].strip()
@@ -228,7 +236,7 @@ def lint(path, glossary, repo):
             elif kind == "table":
                 header = [c.lower() for c in data[0][1]]
                 if len(data) - 1 > TABLE_ROWS_MAX:
-                    rep.add(line, "E", "L6", f"table has {len(data) - 1} rows, maximum is {TABLE_ROWS_MAX}; split it under ### sub-headings")
+                    rep.add(line, "E", "L6", f"table has {len(data) - 1} rows, maximum is {TABLE_ROWS_MAX}; split it into groups under ### sub-headings")
                 for rline, cells in data[1:]:
                     for column, cell in zip(header, cells):
                         limit = REQUIREMENT_MAX if column == "requirement" else SENTENCE_MAX
@@ -314,6 +322,34 @@ def lint(path, glossary, repo):
             first = words[0].strip(",.:") if words else ""
             if first in NOT_A_VERB or not first[:1].isupper():
                 rep.add(n, "E", "S6", f"start the step with a verb (Send, Open, Run), not \"{first}\"")
+
+    # S9 collapsible build layer, L6 groups
+    counts = {}
+    for name in ORDER:
+        blocks = sections.get(name, [])
+        kinds = [k for k, _, _ in blocks]
+        groups = sum(1 for k, _, d in blocks if k == "heading")
+        if groups > GROUPS_MAX:
+            rep.add(lines[name], "E", "L6", f"{name} has {groups} groups, maximum is {GROUPS_MAX}")
+        if name not in BUILD:
+            if "details" in kinds or "summary" in kinds:
+                rep.add(lines[name], "E", "S9", f"{name} is in the skim layer; do not collapse it")
+            continue
+        if not blocks:
+            continue
+        ok = (kinds[:2] == ["details", "summary"] and kinds[-1] == "details"
+              and kinds.count("details") == 2 and kinds.count("summary") == 1)
+        if not ok:
+            rep.add(lines[name], "E", "S9", f"put all of {name} in one <details> block that starts with a <summary> line")
+            continue
+        sline, summary = next((l, d) for k, l, d in blocks if k == "summary")
+        if not summary.startswith("Show "):
+            rep.add(sline, "E", "S9", "start the summary with \"Show\" and say what opens, for example \"Show the 8 requirements\"")
+        tables = [len(d) - 1 for k, _, d in blocks if k == "table"]
+        actual = sum(tables) if name != "Design" else sum(1 for k in kinds if k == "bullet")
+        stated = re.search(r"\d+", summary)
+        if stated and int(stated.group(0)) != actual:
+            rep.add(sline, "E", "S9", f"the summary says {stated.group(0)} but {name} has {actual}")
 
     # S8 paths
     if repo:

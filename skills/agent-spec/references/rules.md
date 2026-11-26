@@ -14,6 +14,7 @@ Every rule has an ID. The linter prints the ID with each finding. `scripts/spec_
 | S6 | Check is a numbered list. Each step starts with a verb (Send, Open, Run) and gives the result to expect. |
 | S7 | An open item is written `OPEN (owner): question`. A spec with Status Approved or Implemented has no open item. |
 | S8 | With `--repo`, each file path in the spec exists. |
+| S9 | Requirements, Design and Cases each sit in one `<details>` block. Its `<summary>` starts with "Show" and says what opens ("Show the 8 requirements"). A number in the summary matches the content. Why, Example and Check are never collapsed. |
 
 ## EARS patterns for S3
 
@@ -35,8 +36,8 @@ MUST NOT and SHOULD NOT are valid. A requirement that needs two modal words is t
 | L2 | A paragraph has at most 4 sentences. A bullet has at most 3 sentences, after an optional bold label. |
 | L3 | Why has at most 80 words. |
 | L4 | The spec has at most 1200 words outside code blocks. |
-| L5 | At most 20 requirements. More than 15 gives a warning. Split a larger spec. |
-| L6 | A table has at most 8 rows and a list has at most 8 items. Split a longer one under `###` sub-headings or labels. |
+| L5 | At most 16 requirements. More than 12 gives a warning. Split a larger spec. |
+| L6 | A group has at most 4 items: 4 rows in a table, 4 items in a list, 4 `###` groups in a section. Split a longer one into groups under `###` sub-headings. |
 
 ## Language
 
@@ -71,6 +72,8 @@ The spec uses progressive disclosure. A reader gets the most with the least read
 
 Cases is last because it is reference material for tests.
 
+The build layer is collapsed. Each build section is a `<details>` block, so a Markdown viewer shows one line ("Show the 8 requirements") until the reader opens it. An agent reads the source and sees all of it. `scripts/view.py` renders the same layers as an HTML page.
+
 ## Chunks
 
 Each part of the spec is a small chunk with a label, so that a reader can scan for the part they need.
@@ -78,7 +81,8 @@ Each part of the spec is a small chunk with a label, so that a reader can scan f
 - One idea for each sentence, one behaviour for each requirement, one fact for each bullet.
 - Short paragraphs. Use a list when a paragraph holds several separate facts.
 - A bold label at the start of a Design bullet names the topic.
-- Cases go in groups of at most 8 rows, each under a `###` sub-heading that names the group.
+- Groups of four. A reader holds about four new items at one time, so a table has at most 4 rows, a list has at most 4 items, and a section has at most 4 groups.
+- Requirements, Design bullets and Cases go in groups under `###` sub-headings that name the group.
 - Check is a numbered list of steps.
 
 L2 and L6 enforce the limits. The labels and the grouping are for a person to judge.
@@ -87,8 +91,8 @@ L2 and L6 enforce the limits. The labels and the grouping are for a person to ju
 
 | Technique | What it asks for | Where the spec applies it |
 |---|---|---|
-| Chunking | Small labelled units; about 4 to 7 items in a group | L2, L6, bold labels in Design, `###` groups in Cases |
-| Progressive disclosure | The essential part first, detail on demand, no repeated text between layers | S2: the skim layer, then the build layer; one copy of each fact |
+| Chunking | Small labelled units; about 4 items in a group | L2, L6, bold labels in Design, `###` groups of four |
+| Progressive disclosure | The essential part first, detail on demand behind a labelled control, no repeated text between layers | S2 and S9: the skim layer is open, the build layer is collapsed; one copy of each fact |
 | Bottom line up front | The most important information first, at every level | Why is first; a label starts each Design bullet; the result is in each Check step |
 | Clear sentences | Active voice, exact verbs, one idea, 20 words or fewer | L1, G3, G4, G5 |
 | One term for one concept | No synonyms for a technical term | G2 and the glossary |

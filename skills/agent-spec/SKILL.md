@@ -31,6 +31,7 @@ The content is what published design-doc templates and agent-spec guides all sha
 | [references/golden-example-glossary.md](references/golden-example-glossary.md) | The glossary for the golden example. |
 | [references/rules.md](references/rules.md) | Every rule with its ID. Read it when the linter reports an ID you need to understand. |
 | [scripts/lint.sh](scripts/lint.sh) | Runs both linters. |
+| [scripts/view.py](scripts/view.py) | Renders a spec as one HTML page for a person to read. |
 
 ## Writing a spec
 
@@ -44,8 +45,9 @@ The person owns the decisions. Your job is to get those decisions out of their h
 6. **Keep Design to what the agent cannot work out.** Before each line, ask whether the agent could find the fact in the code, and whether it would look. If both are yes, leave the line out. What belongs: a schema or interface other code depends on, a decision with its reason, an approach the agent must not use, a deploy or rollback step. Leave function layout, naming and file structure to the agent.
 7. **State each fact once.** A value that appears in a requirement and again in Design will drift, and the agent cannot tell which copy is right.
 8. **Add glossary terms as you go.** When you notice two words for one thing, pick one and add the other to "Do not use".
-9. **Write in chunks, with the main point first.** One idea for each sentence and one fact for each bullet. Start each Design bullet with a bold label and each Check step with a verb. Group the cases under `###` sub-headings of at most 8 rows. A reader scans the first words of each chunk, finds the one they need, and skips the rest.
-10. **Run the linter and fix the findings.** Then do the review below, because the linter cannot find a missing failure mode.
+9. **Collapse the build layer.** Put all of Requirements, Design and Cases each in one `<details>` block. Start its `<summary>` with "Show" and say what opens: "Show the 8 requirements". Leave Why, Example and Check open.
+10. **Write in chunks, with the main point first.** One idea for each sentence and one fact for each bullet. Start each Design bullet with a bold label and each Check step with a verb. Use groups of four: at most 4 rows in a table, 4 items in a list and 4 `###` groups in a section, because a reader holds about four new items at one time. A reader scans the first words of each chunk, finds the one they need, and skips the rest.
+11. **Run the linter and fix the findings.** Then do the review below, because the linter cannot find a missing failure mode.
 
 Build commands, test commands and standing rules for agents do not belong in a spec. They belong in the repository's agent file (`AGENTS.md` or `CLAUDE.md`), because a copy in each spec goes stale.
 
@@ -61,6 +63,21 @@ scripts/lint.sh path/to/spec.md --glossary g.md
 The script exits 0 when the spec passes, 1 when a check fails, and 2 when Vale is missing. Each finding has a rule ID that [references/rules.md](references/rules.md) explains. If Vale is not installed, `python3 scripts/spec_lint.py` still runs the structure, length and glossary rules; tell the user that the prose style rules did not run.
 
 Fix a finding by changing the text, not by working around the rule. A requirement over 40 words usually hides two behaviours. A passive sentence usually hides which component acts.
+
+## Viewing a spec
+
+```bash
+python3 scripts/view.py path/to/spec.md            # writes path/to/spec.html
+python3 scripts/view.py path/to/spec.md --open     # and opens it in a browser
+```
+
+The page is one self-contained file with no network requests. Offer it when a person wants to read or review a spec:
+
+- The skim layer is open and each build section opens from a "Show…" control.
+- A sidebar lists the sections and their groups.
+- A pointer on a requirement lights the cases that cover it, and each case links back to its requirements.
+- A glossary term shows its meaning on hover or focus.
+- A badge shows the result of the structure linter. Light and dark themes follow the system.
 
 ## Reviewing a spec
 
