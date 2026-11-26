@@ -1,0 +1,12 @@
+extends: existence
+message: "G5: '%s' is a weak verb. Name the actor and use an exact verb."
+level: warning
+ignorecase: true
+tokens:
+  - occurs?
+  - occurred
+  - occurring
+  - happens?
+  - happened
+  - happening
+  - takes? place

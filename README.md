@@ -30,10 +30,10 @@ POST /v1/projects/prj_301/archive   →   200 {"id": "prj_301", "archived_at": "
 
 ## Check
 
-1. In the local environment, archive a project as its owner with `curl`.
-2. `GET /v1/projects` does not list the project.
-3. `GET /v1/projects?include_archived=true` lists the project.
-4. A `PATCH` request to the project returns 409.
+1. Archive a project as its owner with `curl`, in the local environment.
+2. Send `GET /v1/projects`. The list does not have the project.
+3. Send `GET /v1/projects?include_archived=true`. The list has the project.
+4. Send a `PATCH` request to the project. The response is 409.
 ```
 
 The rest is for the build: requirements, design decisions and test cases. The full example is
@@ -54,7 +54,7 @@ The rest is for the build: requirements, design decisions and test cases. The fu
 |---|---|---|
 | Skim | Why | What happens today, what is true afterwards, and the scope in one sentence |
 | Skim | Example | One real request and its real response |
-| Skim | Check | Numbered steps that prove the change works |
+| Skim | Check | Numbered steps, each one a verb and the result to expect |
 | Build | Requirements | A table of behaviours with IDs, one sentence each |
 | Build | Design | Optional. Only what the agent cannot find in the code or decide alone |
 | Build | Cases | Tables of `Given`, `When`, `Then`, in groups of at most 8 rows |
@@ -80,8 +80,8 @@ spec.md:99:21:AgentSpec.Vague:G1: 'quickly' is not specific. Give a value, a lis
 | Rules | Check |
 |---|---|
 | S1 to S8 | Title and status line, section order, requirement patterns, a worked example, case coverage, open items, file paths |
-| L1 to L6 | 25 words a sentence (40 for a requirement), 4 sentences a paragraph, 80 words in Why, 1,200 words in the spec, 20 requirements, 8 rows a table |
-| G1 to G4 | No vague words, glossary terms only, active voice, no sentence that opens with "It is" |
+| L1 to L6 | 25 words a sentence (40 for a requirement, a warning above 20), 4 sentences a paragraph, 80 words in Why, 1,200 words in the spec, 20 requirements, 8 rows a table and 8 items a list |
+| G1 to G5 | No vague words, glossary terms only, active voice, no "It is" or "There is" openers, no weak verbs |
 
 The full list is in [`rules.md`](skills/agent-spec/references/rules.md). The language rules are the Simplified
 Technical English writing rules that change how a model reads a spec; a project glossary replaces the STE
@@ -95,7 +95,7 @@ pnpm dlx skills add zhuasy/agent-spec   # or bunx skills add zhuasy/agent-spec
 ```
 
 Works with Claude Code, Codex, Cursor and other agents that read skills. Needs `python3` and `bash`. The prose
-style rules (G1, G3, G4) need [Vale](https://vale.sh/docs/install); without it the structure, length and glossary
+style rules (G1, G3, G4, G5) need [Vale](https://vale.sh/docs/install); without it the structure, length and glossary
 rules still run through `spec_lint.py`.
 
 ## What is in the skill

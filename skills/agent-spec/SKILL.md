@@ -44,7 +44,7 @@ The person owns the decisions. Your job is to get those decisions out of their h
 6. **Keep Design to what the agent cannot work out.** Before each line, ask whether the agent could find the fact in the code, and whether it would look. If both are yes, leave the line out. What belongs: a schema or interface other code depends on, a decision with its reason, an approach the agent must not use, a deploy or rollback step. Leave function layout, naming and file structure to the agent.
 7. **State each fact once.** A value that appears in a requirement and again in Design will drift, and the agent cannot tell which copy is right.
 8. **Add glossary terms as you go.** When you notice two words for one thing, pick one and add the other to "Do not use".
-9. **Write in chunks.** One idea for each sentence and one fact for each bullet. Give each Design bullet a bold label, make Check a numbered list, and group the cases under `###` sub-headings of at most 8 rows. A reader scans for the label they need and skips the rest.
+9. **Write in chunks, with the main point first.** One idea for each sentence and one fact for each bullet. Start each Design bullet with a bold label and each Check step with a verb. Group the cases under `###` sub-headings of at most 8 rows. A reader scans the first words of each chunk, finds the one they need, and skips the rest.
 10. **Run the linter and fix the findings.** Then do the review below, because the linter cannot find a missing failure mode.
 
 Build commands, test commands and standing rules for agents do not belong in a spec. They belong in the repository's agent file (`AGENTS.md` or `CLAUDE.md`), because a copy in each spec goes stale.

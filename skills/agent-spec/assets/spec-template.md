@@ -19,10 +19,10 @@
 
 ## Check
 
-<!-- The steps that a person or an agent runs, and the result that proves the change works. -->
+<!-- The steps that a person or an agent runs, and the result that proves the change works.
+     A numbered list. Start each step with a verb, and put the expected result in the same step. -->
 
-1. <step>
-2. <result that proves the change>
+1. <Verb> <what to do>. <The result that proves the change.>
 
 ## Requirements
 

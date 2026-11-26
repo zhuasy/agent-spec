@@ -30,11 +30,15 @@ OPEN = re.compile(r"\bOPEN\b")
 OPEN_OK = re.compile(r"\bOPEN \([^)]+\): \S")
 PATH = re.compile(r"`([\w.-]+(?:/[\w.-]+)+\.\w+)(?:::\w+)?`")
 
+SENTENCE_WARN = 20
 SENTENCE_MAX = 25
 REQUIREMENT_MAX = 40
 PARAGRAPH_MAX = 4
 BULLET_MAX = 3
 TABLE_ROWS_MAX = 8
+LIST_ITEMS_MAX = 8
+NOT_A_VERB = {"The", "A", "An", "It", "This", "That", "These", "Those", "There", "In", "On", "At", "For",
+              "With", "When", "If", "After", "Before", "Then", "Each", "Every", "All", "Both", "CODE"}
 WHY_MAX = 80
 REQ_ROWS_WARN, REQ_ROWS_MAX = 15, 20
 DOC_MAX = 1200
@@ -166,6 +170,8 @@ def check_prose(rep, line, text, banned, limit=SENTENCE_MAX):
         n = word_count(s)
         if n > limit:
             rep.add(line, "E", "L1", f"sentence has {n} words, maximum is {limit}: \"{s[:60]}...\"")
+        elif limit == SENTENCE_MAX and n > SENTENCE_WARN:
+            rep.add(line, "W", "L1", f"sentence has {n} words, aim for {SENTENCE_WARN} or fewer: \"{s[:60]}...\"")
     plain = clean(text)
     for word, term in banned.items():
         if re.search(rf"\b{re.escape(word)}s?\b", plain, re.I):
@@ -206,7 +212,11 @@ def lint(path, glossary, repo):
     # Prose rules and open items, on every section
     total = 0
     for name, blocks in sections.items():
+        run = 0
         for kind, line, data in blocks:
+            run = run + 1 if kind == "bullet" else 0
+            if run == LIST_ITEMS_MAX + 1:
+                rep.add(line, "E", "L6", f"list has more than {LIST_ITEMS_MAX} items; group the items under labels or sub-headings")
             units = []
             if kind in ("para", "bullet"):
                 units.append((line, data, SENTENCE_MAX))
@@ -290,9 +300,20 @@ def lint(path, glossary, repo):
         if cline is not None and UNCHANGED not in covered:
             rep.add(cline, "W", "S5", f"no case protects existing behaviour; add a row that covers \"{UNCHANGED}\"")
 
-    # S6 Check
-    if "Check" in sections and not any(k in ("para", "bullet", "code") for k, _, _ in sections["Check"]):
-        rep.add(lines["Check"], "E", "S6", "Check is empty; give the steps and the result that proves the change")
+    # S6 Check: numbered steps that each start with a verb
+    if "Check" in sections:
+        raw_lines = raw.split("\n")
+        start = lines["Check"]
+        later = [l for _, l in order if l > start]
+        steps = [(n, m.group(1)) for n in range(start + 1, (min(later) if later else len(raw_lines) + 1))
+                 for m in [re.match(r"\s*\d+\.\s+(.*)", raw_lines[n - 1])] if m]
+        if not steps:
+            rep.add(start, "E", "S6", "Check needs a numbered list of steps")
+        for n, text in steps:
+            words = clean(text).split()
+            first = words[0].strip(",.:") if words else ""
+            if first in NOT_A_VERB or not first[:1].isupper():
+                rep.add(n, "E", "S6", f"start the step with a verb (Send, Open, Run), not \"{first}\"")
 
     # S8 paths
     if repo:

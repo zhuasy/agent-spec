@@ -1,6 +1,6 @@
 # Spec rules
 
-Every rule has an ID. The linter prints the ID with each finding. `scripts/spec_lint.py` owns the S, L and G2 rules. Vale owns G1, G3 and G4. `scripts/lint.sh` runs both.
+Every rule has an ID. The linter prints the ID with each finding. `scripts/spec_lint.py` owns the S, L and G2 rules. Vale owns G1, G3, G4 and G5. `scripts/lint.sh` runs both.
 
 ## Structure
 
@@ -11,7 +11,7 @@ Every rule has an ID. The linter prints the ID with each finding. `scripts/spec_
 | S3 | Requirements has a table `ID \| Requirement`. IDs are `R<number>` and unique. Each requirement is one sentence in an EARS pattern, with exactly one of MUST, SHOULD, MAY. |
 | S4 | Example has one worked example in a code block, with real values. |
 | S5 | Cases has one or more tables `Given \| When \| Then \| Covers`. Every requirement ID appears in Covers. A row that protects existing behaviour has "Unchanged" in Covers; a spec with no such row gets a warning. |
-| S6 | Check is not empty. |
+| S6 | Check is a numbered list. Each step starts with a verb (Send, Open, Run) and gives the result to expect. |
 | S7 | An open item is written `OPEN (owner): question`. A spec with Status Approved or Implemented has no open item. |
 | S8 | With `--repo`, each file path in the spec exists. |
 
@@ -31,12 +31,12 @@ MUST NOT and SHOULD NOT are valid. A requirement that needs two modal words is t
 
 | ID | Rule |
 |---|---|
-| L1 | A sentence has at most 25 words. A requirement sentence has at most 40, so that the trigger and the response stay together. A code span counts as one word. |
+| L1 | A sentence has at most 25 words; more than 20 gives a warning. A requirement sentence has at most 40, so that the trigger and the response stay together. A code span counts as one word. |
 | L2 | A paragraph has at most 4 sentences. A bullet has at most 3 sentences, after an optional bold label. |
 | L3 | Why has at most 80 words. |
 | L4 | The spec has at most 1200 words outside code blocks. |
 | L5 | At most 20 requirements. More than 15 gives a warning. Split a larger spec. |
-| L6 | A table has at most 8 rows. Split a longer table into tables under `###` sub-headings. |
+| L6 | A table has at most 8 rows and a list has at most 8 items. Split a longer one under `###` sub-headings or labels. |
 
 ## Language
 
@@ -45,7 +45,8 @@ MUST NOT and SHOULD NOT are valid. A requirement that needs two modal words is t
 | G1 | Error | No vague words: etc, and/or, TBD, appropriate, properly, gracefully, robust, scalable, user-friendly, simply, easily, quickly, fast, best practice, "as needed". No "e.g." or "i.e.". No lowercase "should" or "may". |
 | G2 | Error | Use glossary terms. A word in the "Do not use" column of `glossary.md` is an error. |
 | G3 | Warning | Use the active voice. Name who acts: the client, the API, the job. |
-| G4 | Warning | Do not open a sentence with "It is", "This is" or a similar pronoun. Name the thing. |
+| G4 | Warning | Do not open a sentence with "It is", "This is", "There is" or "There are". Name the thing that acts. |
+| G5 | Warning | No weak verbs: occur, happen, take place. Name the actor and use an exact verb. |
 
 These are the Simplified Technical English writing rules that change how a model reads a spec. The STE dictionary is not used; the project glossary replaces it.
 
@@ -81,6 +82,22 @@ Each part of the spec is a small chunk with a label, so that a reader can scan f
 - Check is a numbered list of steps.
 
 L2 and L6 enforce the limits. The labels and the grouping are for a person to judge.
+
+## The techniques behind the rules
+
+| Technique | What it asks for | Where the spec applies it |
+|---|---|---|
+| Chunking | Small labelled units; about 4 to 7 items in a group | L2, L6, bold labels in Design, `###` groups in Cases |
+| Progressive disclosure | The essential part first, detail on demand, no repeated text between layers | S2: the skim layer, then the build layer; one copy of each fact |
+| Bottom line up front | The most important information first, at every level | Why is first; a label starts each Design bullet; the result is in each Check step |
+| Clear sentences | Active voice, exact verbs, one idea, 20 words or fewer | L1, G3, G4, G5 |
+| One term for one concept | No synonyms for a technical term | G2 and the glossary |
+| Parallel lists | Every step starts with an imperative verb | S6 |
+| Separate document types (Diataxis) | Do not mix explanation, procedure and reference | Why explains; Check is a procedure; Requirements and Cases are reference |
+| Minimalism | Only text that supports the task | L3, L4, and the review for filler |
+| Controlled language | Restricted grammar and vocabulary | EARS patterns in S3; the Simplified Technical English writing rules |
+
+One piece of guidance does not apply: a line width of 50 to 75 characters. A viewer sets the width of rendered Markdown, and a table row cannot wrap in the source.
 
 ## Where the sections come from
 

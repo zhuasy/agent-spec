@@ -27,10 +27,10 @@ HTTP/1.1 200 OK
 
 ## Check
 
-1. In the local environment, archive a project as its owner with `curl`.
-2. `GET /v1/projects` does not list the project.
-3. `GET /v1/projects?include_archived=true` lists the project.
-4. A `PATCH` request to the project returns 409.
+1. Archive a project as its owner with `curl`, in the local environment.
+2. Send `GET /v1/projects`. The list does not have the project.
+3. Send `GET /v1/projects?include_archived=true`. The list has the project.
+4. Send a `PATCH` request to the project. The response is 409.
 
 ## Requirements
 

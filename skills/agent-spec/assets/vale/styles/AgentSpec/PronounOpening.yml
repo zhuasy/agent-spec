@@ -1,8 +1,9 @@
 extends: existence
-message: "G4: The sentence opens with '%s'. Name the thing."
+message: "G4: The sentence opens with '%s'. Name the thing that acts."
 level: warning
 ignorecase: false
 scope: sentence
 nonword: true
 tokens:
   - '^(?:It|This|That|These|Those|They) (?:is|are|was|were|will|can|does|do|has|have|means|happens|allows|lets)\b'
+  - '^There (?:is|are|was|were|will be|can be)\b'
