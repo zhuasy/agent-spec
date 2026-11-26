@@ -1,0 +1,184 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "What exactly is limited?",
+      "options": {
+        "A": "Seats per user per event, added up over all of that user's reservations for the event (4 by default)",
+        "B": "Seats per user added up over all events",
+        "C": "Seats in a single reservation",
+        "D": "The number of reservations a user may hold"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f2",
+      "kind": "decision",
+      "q": "What happens when a request would take the user over the limit?",
+      "options": {
+        "A": "As many seats as still fit under the limit are reserved",
+        "B": "`LimitExceeded` is raised and nothing is reserved",
+        "C": "`SoldOut` is raised",
+        "D": "The call returns `None`"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "How do the rules apply to admins (box office staff)?",
+      "options": {
+        "A": "Neither the limit nor the capacity applies to them",
+        "B": "The per-user limit does not apply to them; event capacity still does",
+        "C": "They have a higher fixed limit",
+        "D": "The same limit applies to them"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "A user cancels a reservation. What happens to their allowance?",
+      "options": {
+        "A": "The cancelled seats no longer count against them",
+        "B": "The cancelled seats still count",
+        "C": "They are freed only if an admin cancelled",
+        "D": "They count for another 24 hours"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "How is the limit configured?",
+      "options": {
+        "A": "It is fixed in the code",
+        "B": "A field on each event in the store",
+        "C": "An environment variable",
+        "D": "A constructor argument `max_per_user`, default 4"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "What does the text require when many `reserve()` calls run at the same moment in different threads?",
+      "options": {
+        "A": "Nothing; calls are assumed to come one at a time",
+        "B": "Callers must retry on failure",
+        "C": "Only one thread is allowed to call the service",
+        "D": "The limit and the capacity must both hold; the check and the save must not interleave"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f7",
+      "kind": "decision",
+      "q": "What does the text say about the store interface?",
+      "options": {
+        "A": "Lock methods are added to the store",
+        "B": "It must not change: only `get_event` and `save_event` are available",
+        "C": "The store is replaced by a SQL database",
+        "D": "A new atomic update method is added to the store"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "In what runtime setting does the service run, according to the text?",
+      "options": {
+        "A": "A single thread",
+        "B": "Several processes or machines sharing the store",
+        "C": "One process with a pool of threads",
+        "D": "An async event loop"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief: '16 threads, one process'"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is being added?",
+      "options": {
+        "A": "A refund flow",
+        "B": "A waiting list",
+        "C": "A limit on how many seats one user can hold for one event",
+        "D": "Price tiers"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "Under what condition must it hold, according to this opening?",
+      "options": {
+        "A": "Across several currencies",
+        "B": "Across time zones",
+        "C": "Many `reserve()` calls arriving at once from parallel threads",
+        "D": "With no network connection"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "What must not be changed?",
+      "options": {
+        "A": "The names of the events",
+        "B": "The store interface (`get_event` / `save_event`)",
+        "C": "The web page layout",
+        "D": "The capacity of existing events"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

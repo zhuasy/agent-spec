@@ -1,0 +1,18 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreSummary.test_counts_and_shape": "new",
+    "CoreSummary.test_query_string_is_stripped": "new",
+    "CoreSummary.test_p95_is_nearest_rank": "new",
+    "CoreSummary.test_top_default_is_ten_and_flag_limits": "new",
+    "CoreSummary.test_garbage_lines_are_skipped_and_counted": "new",
+    "EdgeCli.test_missing_file_exits_2_without_traceback": "new",
+    "EdgeCli.test_dash_reads_stdin": "new",
+    "EdgeCli.test_empty_file": "new",
+    "EdgeCli.test_ties_are_alphabetical": "new",
+    "EdgeCli.test_totals_cover_the_whole_file_not_just_top": "new",
+    "EdgeCli.test_4xx_is_not_an_error_and_599_is": "new",
+    "EdgeCli.test_sample_file": "new",
+    "KeepExisting.test_linecount_still_works": "regression"
+  }
+}

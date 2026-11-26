@@ -1,0 +1,183 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "On what are two rows recognised as the same contact?",
+      "options": {
+        "A": "The name",
+        "B": "The name and company together",
+        "C": "The email address, ignoring upper/lower case and spaces around it",
+        "D": "The email address exactly as typed"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f2",
+      "kind": "decision",
+      "q": "The person who reported the problem suggested removing duplicates by name. What does the text say about that?",
+      "options": {
+        "A": "It is the chosen fix",
+        "B": "Name is used as a fallback when the email is missing",
+        "C": "It must not be done: different people share a name"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "How are `billing+jane@northwind.example` and `jane@northwind.example` treated?",
+      "options": {
+        "A": "As the same contact; the `+...` part is removed",
+        "B": "They are merged only when the names match",
+        "C": "As different contacts; the part after `+` is not removed",
+        "D": "Addresses with `+` are rejected"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "What happens to rows that have no email address?",
+      "options": {
+        "A": "They are dropped from the export",
+        "B": "Each stays as its own row; they are never merged",
+        "C": "They are merged by name",
+        "D": "They are all merged into one row"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "When rows are merged, whose values win?",
+      "options": {
+        "A": "The first row in the file; later rows only fill in blank fields",
+        "B": "The longest value for each field",
+        "C": "The row with the most filled-in fields",
+        "D": "The last row in the file"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "Which email address is written to the export for a contact?",
+      "options": {
+        "A": "The address in upper case",
+        "B": "All the variants, separated by semicolons",
+        "C": "The cleaned address: no surrounding spaces, lower case",
+        "D": "The address exactly as typed in the first row"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f7",
+      "kind": "decision",
+      "q": "A row's email field contains only spaces. How is it treated?",
+      "options": {
+        "A": "The row is dropped",
+        "B": "The run stops with an error",
+        "C": "It is merged with other rows whose email is only spaces",
+        "D": "As a row with no email: kept as its own row"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "inferred: trimming makes it empty, and no-email rows must stay separate"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "In what order do contacts appear in the export?",
+      "options": {
+        "A": "In the order in which each contact first appears in the input, as today",
+        "B": "Merged contacts first, then the rest",
+        "C": "Sorted by email address",
+        "D": "Sorted by name"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "existing behaviour that must not change"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is the problem being fixed?",
+      "options": {
+        "A": "The columns come out in the wrong order",
+        "B": "The same person appears several times in the export because addresses that differ only in case or spaces are not matched",
+        "C": "The export crashes on large files",
+        "D": "The export is too slow"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "Which way of fixing it is ruled out?",
+      "options": {
+        "A": "Trimming spaces",
+        "B": "Lower-casing addresses",
+        "C": "Comparing email addresses",
+        "D": "Removing duplicates by name"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "According to this opening, what must stay as it is today?",
+      "options": {
+        "A": "Nothing; the tool is rewritten",
+        "B": "Phone number formatting",
+        "C": "The existing merge rules, such as rows without an email staying separate (and the first row winning)",
+        "D": "The templates in the mail-merge tool"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

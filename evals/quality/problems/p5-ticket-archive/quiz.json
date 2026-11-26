@@ -1,0 +1,206 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "What is the setting that holds the archive period called?",
+      "options": {
+        "A": "`archive_days`",
+        "B": "`archive_after_days`",
+        "C": "There is no setting; the period is fixed in the code",
+        "D": "`retention_days`"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f2",
+      "kind": "open",
+      "q": "How does the text deal with the length of the archive period (30 or 90 days)?",
+      "options": {
+        "A": "It is a setting, and the text says outright that the 30-or-90 choice is still waiting on legal (whatever value is used meanwhile)",
+        "B": "30 days, given as a settled decision",
+        "C": "Some other number of days, given as a settled decision",
+        "D": "90 days, given as a settled decision"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [
+        "B",
+        "C",
+        "D"
+      ],
+      "why": "brief: undecided; correct behaviour is to make it a setting and flag it"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "From which moment is the period counted?",
+      "options": {
+        "A": "From when the ticket was created",
+        "B": "From the most recent time the ticket was closed",
+        "C": "From the first time the ticket was closed",
+        "D": "From the last time anything on the ticket changed"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "A ticket was closed long ago, then reopened, and is open now. Is it archived?",
+      "options": {
+        "A": "No. Only tickets that are closed now can be archived",
+        "B": "Yes, but only if it was reopened longer ago than the period",
+        "C": "Yes, because its closing date is old",
+        "D": "It is closed automatically and then archived"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "What happens to tickets with `legal_hold`?",
+      "options": {
+        "A": "They are archived after twice the period",
+        "B": "They are archived but hidden even from `--include-archived`",
+        "C": "They are archived like any other ticket",
+        "D": "They are never archived"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "How do archived tickets behave in `search` and `show`?",
+      "options": {
+        "A": "Hidden from `search` unless `--include-archived` is given; `show` by id still works",
+        "B": "Moved to another file, which `show` reads with a new flag",
+        "C": "Still listed by `search`, marked as archived",
+        "D": "Gone from both `search` and `show`"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f7",
+      "kind": "open",
+      "q": "What does the text say about reopening a ticket that is already archived?",
+      "options": {
+        "A": "Reopening un-archives the ticket, given as a settled decision",
+        "B": "Archived tickets cannot be reopened, given as a settled decision",
+        "C": "`reopen` is left as it is for now, and the question is recorded as not settled"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [
+        "A",
+        "B"
+      ],
+      "why": "brief: 'We didn't settle it. Leave reopen alone for now and note it'"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "What does archiving do to the ticket's data?",
+      "options": {
+        "A": "The ticket is deleted",
+        "B": "The ticket is moved to a separate archive file",
+        "C": "The ticket's text is removed and only the id is kept",
+        "D": "It sets a flag on the ticket; nothing is deleted or moved"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f9",
+      "kind": "decision",
+      "q": "What does the `archive` command print?",
+      "options": {
+        "A": "A JSON list of archived tickets",
+        "B": "How many tickets it archived, like `archived 12`",
+        "C": "Nothing",
+        "D": "The ids of the archived tickets, one per line"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is being added?",
+      "options": {
+        "A": "A change to the SLA for open tickets",
+        "B": "A command that automatically archives tickets that have been closed for a set time",
+        "C": "A new search engine",
+        "D": "A job that deletes old tickets"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "According to this opening, what is still undecided?",
+      "options": {
+        "A": "Whether closed tickets should be deleted",
+        "B": "Which database to use",
+        "C": "Who is allowed to run the command",
+        "D": "Whether the period is 30 or 90 days (legal has not answered)"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "Which tickets must never be archived?",
+      "options": {
+        "A": "Tickets from VIP customers",
+        "B": "Tickets older than a year",
+        "C": "Tickets with `legal_hold`",
+        "D": "Tickets with attachments"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

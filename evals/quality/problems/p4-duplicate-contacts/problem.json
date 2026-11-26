@@ -1,0 +1,12 @@
+{
+  "name": "p4-duplicate-contacts",
+  "title": "Duplicate contacts in the export",
+  "kind": "bug-shaped request with a wrong suggested fix",
+  "tests": "Finding the real cause behind a symptom report, rejecting the reporter's suggested fix (dedupe by name), and keeping the merge rules that already work.",
+  "left_open": [
+    "Whether merge_contacts itself returns the cleaned address or cleaning happens at export (tests check the exact cleaned value only in the exported file)"
+  ],
+  "inferred": [
+    "An email of only spaces is a row with no email and stays separate"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreTags.test_add_with_tags_shows_them_in_list": "new",
+    "CoreTags.test_list_filters_by_tag": "new",
+    "CoreTags.test_two_tags_on_list_means_both": "new",
+    "CoreTags.test_tags_ignore_case_and_are_shown_lowercase": "new",
+    "CoreTags.test_tags_command_counts_open_tasks_biggest_first": "new",
+    "CoreTags.test_invalid_tag_is_error_and_nothing_saved": "new",
+    "EdgeTags.test_all_combines_with_tag_filter": "new",
+    "EdgeTags.test_same_tag_twice_is_stored_once": "new",
+    "EdgeTags.test_tags_command_ignores_done_tasks": "new",
+    "EdgeTags.test_tags_command_on_empty_store_succeeds": "new",
+    "EdgeTags.test_digits_and_dashes_are_valid": "new",
+    "KeepOldBehaviour.test_old_file_lists_exactly_as_before": "regression",
+    "KeepOldBehaviour.test_old_file_with_tag_filter_does_not_crash": "new",
+    "KeepOldBehaviour.test_old_file_accepts_new_tagged_task": "new",
+    "KeepOldBehaviour.test_untagged_task_line_unchanged": "regression",
+    "KeepOldBehaviour.test_done_and_errors_unchanged": "new"
+  }
+}

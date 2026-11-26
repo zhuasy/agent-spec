@@ -1,0 +1,16 @@
+{
+  "name": "p5-ticket-archive",
+  "title": "Auto-archive closed tickets",
+  "kind": "brief with genuinely undecided points",
+  "tests": "Handling two points the brief says are undecided (30 vs 90 days; reopening an archived ticket): build what is decided, do not block, do not silently settle the open ones.",
+  "left_open": [
+    "Default value of archive_after_days: tests use tickets closed 200 days ago (archived under 30 or 90) or 5 days ago (kept under both)",
+    "Exactly N days old (not tested)",
+    "Reopening an archived ticket (not tested)",
+    "How the archived flag is stored (tests use the CLI only)"
+  ],
+  "inferred": [
+    "Only tickets whose status is closed now are archived (the starter leaves a stale closed_at on reopened tickets)",
+    "A second run archives nothing more (it runs nightly)"
+  ]
+}

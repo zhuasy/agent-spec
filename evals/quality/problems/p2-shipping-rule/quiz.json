@@ -1,0 +1,204 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "On which amount is the free-shipping threshold checked after this change?",
+      "options": {
+        "A": "The grand total including shipping",
+        "B": "The discounted amount plus tax",
+        "C": "The goods subtotal minus the coupon discount, before tax",
+        "D": "The cart subtotal before any coupon"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief point 1"
+    },
+    {
+      "id": "f2",
+      "kind": "decision",
+      "q": "What is the free-shipping threshold for orders outside the US?",
+      "options": {
+        "A": "$100",
+        "B": "$75",
+        "C": "$50",
+        "D": "$60"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief point 2"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "What is the free-shipping threshold for US orders?",
+      "options": {
+        "A": "$50, unchanged",
+        "B": "$75",
+        "C": "There is no free shipping in the US any more",
+        "D": "$39"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief: 'US stays at $50'"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "The amount that is compared with the threshold is exactly equal to the threshold. Is shipping charged?",
+      "options": {
+        "A": "No, shipping is free (the rule is 'threshold or more')",
+        "B": "It depends on the country",
+        "C": "Half the flat rate is charged",
+        "D": "Yes, the amount must be above the threshold"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief: 'exactly $50.00 still ships free, and same idea for the 75'"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "What does the text say about how tax, the discount amount and rounding are calculated?",
+      "options": {
+        "A": "They must stay exactly as they are",
+        "B": "The discount is now calculated after tax",
+        "C": "Rounding changes to banker's rounding",
+        "D": "Tax is now also charged on shipping"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief: 'don't touch how tax or the discount amount is calculated, or the rounding'"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "What does the text say about the cart-page strip 'Add $X more for free shipping'?",
+      "options": {
+        "A": "It is shown to US customers only",
+        "B": "It is removed",
+        "C": "It must follow the new rule, so it never disagrees with what checkout charges",
+        "D": "It is out of scope and stays as it is"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief: 'needs to tell the truth under the new rule'"
+    },
+    {
+      "id": "f7",
+      "kind": "scope",
+      "q": "What does the text say about the flat shipping rate for orders outside the US?",
+      "options": {
+        "A": "International shipping becomes free",
+        "B": "A per-country table of rates is introduced",
+        "C": "It stays 4.99 for everyone; a higher international rate is not to be built",
+        "D": "A higher international flat rate is introduced"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [
+        "A",
+        "B",
+        "D"
+      ],
+      "why": "brief: 'NOT decided, don't build it'"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "What does the text say about the fields of the quote result?",
+      "options": {
+        "A": "Amounts change from cents to dollars",
+        "B": "The result becomes an object instead of a dictionary",
+        "C": "The `shipping` field is renamed",
+        "D": "The field names must not change, because the checkout frontend reads them by name"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f9",
+      "kind": "decision",
+      "q": "What happens to orders that contain only digital goods (e-books)?",
+      "options": {
+        "A": "They now pay the flat rate unless over the threshold",
+        "B": "They pay half the flat rate",
+        "C": "They are no longer allowed with a coupon",
+        "D": "They still ship free"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is changing?",
+      "options": {
+        "A": "Which coupon codes exist",
+        "B": "How free shipping is decided: checked after the coupon, with a higher threshold outside the US",
+        "C": "The currency prices are shown in",
+        "D": "The tax rates"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "According to this opening, what must not change?",
+      "options": {
+        "A": "The login flow",
+        "B": "Tax, discount and rounding calculations, and the names of the quote fields",
+        "C": "The product catalogue",
+        "D": "The shipping carrier integration"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "Besides the checkout quote, what else has to follow the new rule?",
+      "options": {
+        "A": "The admin dashboard",
+        "B": "The free-shipping strip (banner) on the cart page",
+        "C": "Receipt emails",
+        "D": "The returns form"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

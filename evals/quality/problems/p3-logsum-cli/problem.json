@@ -1,0 +1,15 @@
+{
+  "name": "p3-logsum-cli",
+  "title": "logsum.py log summariser",
+  "kind": "greenfield CLI",
+  "tests": "Turning a ticket with examples into an exact interface: argument forms, JSON shape, p95 definition, error handling.",
+  "left_open": [
+    "Blank lines (not tested)",
+    "`--top 0` or negative (not tested)",
+    "Wording of error messages"
+  ],
+  "inferred": [
+    "An empty file gives zero counts and an empty by_path list",
+    "p95_ms is an integer"
+  ]
+}

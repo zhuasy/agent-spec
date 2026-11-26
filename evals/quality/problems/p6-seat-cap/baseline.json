@@ -1,0 +1,23 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreCap.test_limit_error_is_a_new_exception_next_to_sold_out": "new",
+    "CoreCap.test_two_then_two_is_fine_then_one_more_is_not": "new",
+    "CoreCap.test_two_then_three_reserves_nothing_more": "new",
+    "CoreCap.test_five_at_once_is_over": "new",
+    "CoreCap.test_cap_is_per_user_and_per_event": "new",
+    "CoreCap.test_cancel_frees_the_users_allowance": "new",
+    "CoreCap.test_admin_is_not_capped": "new",
+    "CoreCap.test_max_per_user_constructor_argument": "new",
+    "EdgeConcurrency.test_cap_holds_under_parallel_requests": "new",
+    "EdgeConcurrency.test_capacity_holds_under_parallel_requests": "new",
+    "EdgeConcurrency.test_parallel_cancel_and_reserve_lose_nothing": "new",
+    "EdgeRules.test_admin_is_still_bound_by_capacity": "regression",
+    "EdgeRules.test_admin_cancelling_for_a_user_frees_that_users_allowance": "regression",
+    "EdgeRules.test_cap_survives_a_new_service_object": "new",
+    "KeepExisting.test_sold_out_still_raised_and_reserves_nothing": "regression",
+    "KeepExisting.test_cancel_permissions": "regression",
+    "KeepExisting.test_zero_seats_is_a_value_error": "regression",
+    "KeepExisting.test_stored_reservation_shape_unchanged": "regression"
+  }
+}

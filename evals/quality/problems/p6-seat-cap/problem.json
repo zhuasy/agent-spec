@@ -1,0 +1,14 @@
+{
+  "name": "p6-seat-cap",
+  "title": "Per-user seat cap",
+  "kind": "feature with a concurrency and permission trap",
+  "tests": "Carrying the context that makes the naive implementation wrong (thread pool, 20 parallel requests, store interface frozen) plus a permission rule (admins exempt from the cap, not from capacity).",
+  "left_open": [
+    "Which error is raised when a request is over both the cap and the capacity (not tested)",
+    "Whether admin-held seats count toward anything (not tested)"
+  ],
+  "inferred": [
+    "cancel() must not lose updates when it runs in parallel with other calls",
+    "The cap is counted from stored reservations, so it holds across service objects"
+  ]
+}

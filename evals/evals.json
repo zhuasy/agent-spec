@@ -1,0 +1,64 @@
+{
+  "skill_name": "agent-spec",
+  "prompt": "Use the agent-spec skill in {skill}. Turn the brief in brief.md into a spec that a coding agent can build from. Save it as spec.md in this folder, with glossary.md and spec.sources.md beside it. The person who wrote the brief is not available for questions. Run the skill's linter before you finish.",
+  "checks_for_every_case": [
+    "lint: scripts/lint.sh spec.md reports no error (a warning does not fail)",
+    "grounded: no S10 finding when the linter uses the brief as the sources file",
+    "quotes: each quoted sentence in spec.sources.md is in the brief"
+  ],
+  "evals": [
+    {
+      "id": "first-name-only",
+      "tests": "A brief signed with a first name, with no ticket and no number.",
+      "must_match": [
+        "\\*\\*Decider:\\*\\*\\s*Sam\\b"
+      ],
+      "must_not_match": []
+    },
+    {
+      "id": "full-brief",
+      "tests": "A brief that gives every fact. The spec uses each one exactly.",
+      "must_match": [
+        "\\*\\*Decider:\\*\\*\\s*Dana Okafor",
+        "PAY-231",
+        "\\b5\\b",
+        "\\b30 seconds\\b"
+      ],
+      "must_not_match": []
+    },
+    {
+      "id": "demo-request",
+      "tests": "A request for a demo with no facts. The spec has no invented person, ticket or statistic.",
+      "must_match": [
+        "\\*\\*Decider:\\*\\*\\s*OPEN \\("
+      ],
+      "must_not_match": []
+    },
+    {
+      "id": "vague-quantity",
+      "tests": "Two decisions that the person left open. The spec has OPEN items, not invented values.",
+      "must_match": [
+        "\\*\\*Decider:\\*\\*\\s*Priya Raman",
+        "DATA-77",
+        "OPEN \\([^)]*\\):[^\\n]*(expir|how long)",
+        "OPEN \\([^)]*\\):[^\\n]*(big|large|size|threshold|limit)"
+      ],
+      "must_not_match": [
+        "\\*\\*Status:\\*\\*\\s*(Approved|Implemented)",
+        "expires? (after|in) \\d+"
+      ]
+    },
+    {
+      "id": "many-behaviours",
+      "tests": "Eleven behaviours. The spec keeps them all, in groups of four.",
+      "must_match": [
+        "\\*\\*Decider:\\*\\*\\s*Lee Jordan",
+        "ACC-140",
+        "audit log",
+        "[Pp]assword reset",
+        "\\| *R1[01] *\\|"
+      ],
+      "must_not_match": []
+    }
+  ]
+}

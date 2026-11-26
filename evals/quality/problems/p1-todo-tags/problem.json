@@ -1,0 +1,15 @@
+{
+  "name": "p1-todo-tags",
+  "title": "Tags for the todo tool",
+  "kind": "new feature in an existing small codebase",
+  "tests": "Carrying a list of small rules (AND filter, case, validation, counts) and one compatibility constraint (old data files) from a chatty brief into the spec.",
+  "left_open": [
+    "Order of tags on a line (tests accept any order)",
+    "Whether a tag with no open tasks is listed by `tags` (tests accept absent or 0)",
+    "Output of `tags` on an empty store (tests only require exit 0)",
+    "Invalid tag on `list` (not tested)"
+  ],
+  "inferred": [
+    "The same tag given twice on one task is stored once"
+  ]
+}

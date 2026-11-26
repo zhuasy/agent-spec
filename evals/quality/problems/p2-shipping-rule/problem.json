@@ -1,0 +1,13 @@
+{
+  "name": "p2-shipping-rule",
+  "title": "Free-shipping rule change",
+  "kind": "behaviour change with things that must not break",
+  "tests": "Stating a rule change precisely (which amount, which threshold, boundary) while protecting tax, rounding and field names; noticing the second place that duplicates the rule (cart banner).",
+  "left_open": [
+    "What the banner's gap number means when a coupon is applied (tests only require gap > 0 exactly when checkout charges shipping)",
+    "Mixed digital + physical carts (not tested beyond today's behaviour)"
+  ],
+  "inferred": [
+    "`shop/banner.py` duplicates the threshold logic and must follow the new rule (brief: the strip 'needs to tell the truth')"
+  ]
+}

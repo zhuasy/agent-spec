@@ -1,0 +1,20 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreArchive.test_old_closed_ticket_is_archived_and_count_printed": "new",
+    "CoreArchive.test_include_archived_brings_it_back": "new",
+    "CoreArchive.test_show_still_works_for_archived": "new",
+    "CoreArchive.test_setting_shortens_the_period": "new",
+    "CoreArchive.test_setting_lengthens_the_period": "new",
+    "EdgeArchive.test_legal_hold_is_never_archived": "new",
+    "EdgeArchive.test_reopened_ticket_is_not_archived": "new",
+    "EdgeArchive.test_reclose_restarts_the_clock": "new",
+    "EdgeArchive.test_second_run_archives_nothing_more": "new",
+    "EdgeArchive.test_status_filter_combines_with_archive_flag": "new",
+    "EdgeArchive.test_nothing_is_deleted": "new",
+    "KeepExisting.test_search_output_format_unchanged": "regression",
+    "KeepExisting.test_overdue_and_sla_setting_unchanged": "regression",
+    "KeepExisting.test_unknown_setting_still_rejected": "regression",
+    "KeepExisting.test_close_reopen_unchanged": "regression"
+  }
+}

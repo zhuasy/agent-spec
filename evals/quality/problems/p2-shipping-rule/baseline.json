@@ -1,0 +1,22 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreThresholdAfterCoupon.test_example_from_the_request": "new",
+    "CoreThresholdAfterCoupon.test_one_cent_under_after_coupon_pays": "new",
+    "EdgeBoundary.test_exactly_fifty_after_coupon_is_free": "regression",
+    "CoreInternationalThreshold.test_sixty_dollars_abroad_now_pays": "new",
+    "CoreInternationalThreshold.test_seventy_five_abroad_is_free": "new",
+    "CoreInternationalThreshold.test_abroad_with_coupon_uses_discounted_amount": "new",
+    "EdgeBannerTellsTheTruth.test_banner_agrees_with_checkout": "regression",
+    "EdgeBannerTellsTheTruth.test_gap_abroad_without_coupon": "new",
+    "KeepEverythingElse.test_us_threshold_unchanged": "regression",
+    "KeepEverythingElse.test_still_free_when_discounted_amount_is_over": "regression",
+    "KeepEverythingElse.test_quote_fields": "regression",
+    "KeepEverythingElse.test_tax_and_discount_rounding": "regression",
+    "KeepEverythingElse.test_tax_ignores_shipping": "new",
+    "KeepEverythingElse.test_flat_rate_is_the_same_abroad": "regression",
+    "KeepEverythingElse.test_digital_only_ships_free_everywhere": "regression",
+    "KeepEverythingElse.test_errors": "regression",
+    "KeepEverythingElse.test_us_banner_without_coupon_unchanged": "regression"
+  }
+}

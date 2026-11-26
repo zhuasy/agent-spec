@@ -1,0 +1,204 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "A user runs `list` with `--tag` given twice, with two different tags. Which tasks are shown?",
+      "options": {
+        "A": "It is an error",
+        "B": "Tasks that have at least one of the tags",
+        "C": "Tasks that have both tags",
+        "D": "Only the last `--tag` is used"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief: 'the things that have both, not either'"
+    },
+    {
+      "id": "f2",
+      "kind": "decision",
+      "q": "How are upper-case and lower-case letters in tags treated?",
+      "options": {
+        "A": "A tag with upper-case letters is rejected as an error",
+        "B": "Case is ignored; tags are stored and shown in lower case",
+        "C": "Tags are case-sensitive: Home and home are different tags",
+        "D": "Case is ignored when filtering, but tags are stored exactly as typed"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief: 'Home and home are the same thing, just store them lowercase'"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "A user runs `add` with a tag that contains a space or a `#`. What happens?",
+      "options": {
+        "A": "An error is reported but the task is still saved without tags",
+        "B": "The bad characters are removed and the task is saved",
+        "C": "An error with exit code 1, and the task is not saved",
+        "D": "The task is saved without that tag and a warning is printed"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief: 'that's an error ... exit 1 ... the task doesn't get saved'"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "Which characters may a tag contain?",
+      "options": {
+        "A": "Letters only",
+        "B": "Letters, digits, dash and underscore",
+        "C": "Letters, digits and dash only",
+        "D": "Anything except spaces"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief: 'letters, digits, dash'"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "Which tasks does the `tags` command count?",
+      "options": {
+        "A": "Only open (not done) tasks",
+        "B": "Only done tasks",
+        "C": "The user chooses with a flag; the default is all tasks",
+        "D": "All tasks, done or not"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief: 'how many open tasks have it'"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "In what order does the `tags` command print the tags?",
+      "options": {
+        "A": "Least-used tag first",
+        "B": "Most-used tag first",
+        "C": "In the order the tags were first used",
+        "D": "Alphabetical only"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief: 'biggest first'"
+    },
+    {
+      "id": "f7",
+      "kind": "decision",
+      "q": "What must happen with todo.json files written by the current version, which have no tags in them?",
+      "options": {
+        "A": "The user is asked to confirm an upgrade the first time the file is opened",
+        "B": "The user must run a one-off migration command first",
+        "C": "They are rejected with an error asking the user to start a new file",
+        "D": "They keep working as they are, with no migration step"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief: 'have to keep working as they are, no migration step'"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "How does `--all` on `list` behave together with `--tag`?",
+      "options": {
+        "A": "`--tag` wins and done tasks stay hidden",
+        "B": "`--all` switches the tag filter off",
+        "C": "They cannot be combined; it is an error",
+        "D": "Both apply: open and done tasks that have the tag(s) are shown"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief: '--all should still work together with it'"
+    },
+    {
+      "id": "f9",
+      "kind": "scope",
+      "q": "What does the text say about renaming tags, or removing a tag from an existing task?",
+      "options": {
+        "A": "Both are part of this change",
+        "B": "Removing a tag is part of this change; renaming is not",
+        "C": "Renaming a tag is part of this change; removing is not",
+        "D": "Both are explicitly not part of this change"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [
+        "A",
+        "B",
+        "C"
+      ],
+      "why": "brief: 'not needed now'"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is being added?",
+      "options": {
+        "A": "Task priorities and sorting",
+        "B": "Due dates and reminders",
+        "C": "Tags on tasks, and listing tasks by tag",
+        "D": "Several todo files (projects) at once"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "According to this opening, what existing thing must keep working?",
+      "options": {
+        "A": "An existing web interface",
+        "B": "An older Python 2 install",
+        "C": "Syncing between machines",
+        "D": "todo.json files written by the current version, without a migration"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "How does a user reach the new behaviour?",
+      "options": {
+        "A": "An environment variable",
+        "B": "A `--tag` option on `add` and `list` (and a `tags` command)",
+        "C": "A separate program",
+        "D": "A new settings file"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

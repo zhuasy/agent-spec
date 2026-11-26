@@ -1,0 +1,218 @@
+{
+  "canary": "EVAL-CANARY-7f3a9c1e-quality",
+  "note": "ANSWER KEY. Never show to a role. Readers get QUIZ.md, generated without the key.",
+  "full": [
+    {
+      "id": "f1",
+      "kind": "decision",
+      "q": "Which responses count as errors?",
+      "options": {
+        "A": "Status 4xx only",
+        "B": "Any status of 400 or above",
+        "C": "Status 5xx only",
+        "D": "Anything that is not 200"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f2",
+      "kind": "decision",
+      "q": "How is p95 calculated?",
+      "options": {
+        "A": "The mean of the slowest 5% of requests",
+        "B": "Nearest rank: sort the durations and take the one at position ceil(0.95 x n), counting from 1",
+        "C": "Linear interpolation between the two nearest values",
+        "D": "The maximum duration"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f3",
+      "kind": "decision",
+      "q": "What happens to a line that cannot be parsed?",
+      "options": {
+        "A": "It is counted as an error request",
+        "B": "It is skipped and counted in `skipped`; it is not a request",
+        "C": "The tool stops with an error",
+        "D": "It is ignored and not counted anywhere"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f4",
+      "kind": "decision",
+      "q": "How are `/api/users?id=7` and `/api/users?id=8` grouped?",
+      "options": {
+        "A": "As two separate paths",
+        "B": "Lines with a query string are skipped",
+        "C": "By the first path segment only (`/api`)",
+        "D": "Together as `/api/users`; the query string is removed"
+      },
+      "correct": [
+        "D"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f5",
+      "kind": "decision",
+      "q": "How many paths are listed when `--top` is not given?",
+      "options": {
+        "A": "20",
+        "B": "10",
+        "C": "All of them",
+        "D": "5"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f6",
+      "kind": "decision",
+      "q": "What happens when the file does not exist?",
+      "options": {
+        "A": "A message on stdout and exit code 1",
+        "B": "A message on stderr and exit code 2, no traceback",
+        "C": "An empty summary and exit code 0",
+        "D": "A Python traceback"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f7",
+      "kind": "decision",
+      "q": "How does the tool read from standard input?",
+      "options": {
+        "A": "With a `--stdin` flag",
+        "B": "Whenever no file argument is given",
+        "C": "When the file argument is `-`",
+        "D": "It cannot read standard input"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": "brief usage"
+    },
+    {
+      "id": "f8",
+      "kind": "decision",
+      "q": "Do `requests` and `errors` cover the whole file or only the listed top paths?",
+      "options": {
+        "A": "`requests` covers the whole file, `errors` only the listed paths",
+        "B": "The whole file",
+        "C": "They are left out when `--top` is given",
+        "D": "Only the paths that are listed"
+      },
+      "correct": [
+        "B"
+      ],
+      "invented": [],
+      "why": "brief"
+    },
+    {
+      "id": "f9",
+      "kind": "decision",
+      "q": "Two paths have the same request count. Which is listed first?",
+      "options": {
+        "A": "The one that comes first alphabetically",
+        "B": "The one with the higher p95",
+        "C": "The one that comes last alphabetically",
+        "D": "The one seen first in the file"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": "brief: 'Ties: alphabetical is fine'"
+    },
+    {
+      "id": "f10",
+      "kind": "scope",
+      "q": "What does the text say about filtering by time?",
+      "options": {
+        "A": "A time filter option is part of the tool",
+        "B": "Lines older than 24 hours are dropped automatically",
+        "C": "It is explicitly left out for now"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [
+        "A",
+        "B"
+      ],
+      "why": "brief: 'No time filtering for now'"
+    }
+  ],
+  "skim": [
+    {
+      "id": "s1",
+      "kind": "skim",
+      "q": "What is being built?",
+      "options": {
+        "A": "A single-file command-line script that summarises an access log as JSON",
+        "B": "A daemon that ships logs to a server",
+        "C": "A web dashboard for logs",
+        "D": "A log rotation job"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s2",
+      "kind": "skim",
+      "q": "What constraint on how it is built does this opening give?",
+      "options": {
+        "A": "One file, Python standard library only",
+        "B": "It is a plugin for an existing monitoring tool",
+        "C": "It needs a database",
+        "D": "It runs in a container"
+      },
+      "correct": [
+        "A"
+      ],
+      "invented": [],
+      "why": ""
+    },
+    {
+      "id": "s3",
+      "kind": "skim",
+      "q": "What does the output contain?",
+      "options": {
+        "A": "The raw matching log lines",
+        "B": "Alert emails",
+        "C": "Totals (requests, errors, skipped lines) and per-path counts with a p95 time",
+        "D": "A chart image"
+      },
+      "correct": [
+        "C"
+      ],
+      "invented": [],
+      "why": ""
+    }
+  ]
+}

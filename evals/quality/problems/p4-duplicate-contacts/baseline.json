@@ -1,0 +1,18 @@
+{
+  "note": "Written by verify_problems.py. 'new' = fails on the untouched starter.",
+  "kind": {
+    "CoreDuplicates.test_case_and_space_variants_merge_in_merge_contacts": "new",
+    "CoreDuplicates.test_export_has_one_row_with_clean_lowercase_address": "new",
+    "CoreDuplicates.test_trailing_space_and_all_caps": "new",
+    "EdgeNormalising.test_first_row_wins_even_when_it_is_the_messy_one": "new",
+    "EdgeNormalising.test_unduplicated_messy_address_is_cleaned_in_export": "new",
+    "EdgeNormalising.test_whitespace_only_email_counts_as_no_email": "new",
+    "EdgeNormalising.test_input_is_not_modified": "regression",
+    "KeepMergeRules.test_same_name_different_people_stay_apart": "regression",
+    "KeepMergeRules.test_plus_addresses_are_separate_inboxes": "regression",
+    "KeepMergeRules.test_no_email_rows_are_kept_apart_and_in_place": "new",
+    "KeepMergeRules.test_first_wins_and_blanks_filled": "regression",
+    "KeepMergeRules.test_order_is_first_appearance": "new",
+    "KeepMergeRules.test_csv_columns_unchanged": "regression"
+  }
+}
